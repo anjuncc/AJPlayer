@@ -24,13 +24,13 @@
                                         <rect key="frame" x="0.0" y="540" width="600" height="60"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="A7G-xF-DNS">
-                                                <rect key="frame" x="10" y="15" width="30" height="30"/>
+                                                <rect key="frame" x="11" y="19" width="29" height="22"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="height" constant="30" id="KAz-XX-hXY"/>
-                                                    <constraint firstAttribute="width" constant="30" id="Vb0-uj-VlS"/>
+                                                    <constraint firstAttribute="height" constant="22" id="KAz-XX-hXY"/>
+                                                    <constraint firstAttribute="width" constant="29" id="Vb0-uj-VlS"/>
                                                 </constraints>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                <state key="normal" title="s">
+                                                <state key="normal" image="PlayButton">
                                                     <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 </state>
                                                 <connections>
@@ -90,7 +90,7 @@
                                             <constraint firstItem="xBD-oH-8ga" firstAttribute="leading" secondItem="JxR-Iu-UUp" secondAttribute="trailing" constant="8" id="SY8-ed-deD"/>
                                             <constraint firstItem="xBD-oH-8ga" firstAttribute="centerY" secondItem="dFG-dF-U89" secondAttribute="centerY" id="UJp-6N-7fN"/>
                                             <constraint firstItem="hxk-l7-TEJ" firstAttribute="centerY" secondItem="dFG-dF-U89" secondAttribute="centerY" id="Zer-kk-TST"/>
-                                            <constraint firstItem="A7G-xF-DNS" firstAttribute="leading" secondItem="dFG-dF-U89" secondAttribute="leading" constant="10" id="etT-7X-wmC"/>
+                                            <constraint firstItem="A7G-xF-DNS" firstAttribute="leading" secondItem="dFG-dF-U89" secondAttribute="leading" constant="11" id="etT-7X-wmC"/>
                                             <constraint firstItem="mhB-xV-SU7" firstAttribute="centerY" secondItem="dFG-dF-U89" secondAttribute="centerY" id="jmp-TS-t7i"/>
                                             <constraint firstItem="mhB-xV-SU7" firstAttribute="leading" secondItem="A7G-xF-DNS" secondAttribute="trailing" constant="8" id="t18-Q9-Fgy"/>
                                             <constraint firstItem="buB-nj-5nz" firstAttribute="leading" secondItem="xBD-oH-8ga" secondAttribute="trailing" constant="8" id="yZS-AW-R1K"/>
@@ -105,6 +105,9 @@
                                         <state key="normal" title="back">
                                             <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
+                                        <connections>
+                                            <action selector="stopView:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ohg-qE-TzL"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -131,6 +134,7 @@
                         <outlet property="playPauseButton" destination="A7G-xF-DNS" id="6bh-w8-5qa"/>
                         <outlet property="playerView" destination="GCH-Bp-hCm" id="dAn-Pl-OxK"/>
                         <outlet property="startTimeLabel" destination="mhB-xV-SU7" id="Msh-h1-N7o"/>
+                        <outlet property="stopButton" destination="mDd-r3-zvi" id="H36-7q-OUp"/>
                         <outlet property="timeSlider" destination="hxk-l7-TEJ" id="cHS-8U-usQ"/>
                     </connections>
                 </viewController>
@@ -139,4 +143,7 @@
             <point key="canvasLocation" x="349" y="389"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="PlayButton" width="21" height="22"/>
+    </resources>
 </document>
