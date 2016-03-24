@@ -37,46 +37,53 @@
                                                     <action selector="playPauseButtonWasPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="RUd-xd-Ou3"/>
                                                 </connections>
                                             </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xBD-oH-8ga">
-                                                <rect key="frame" x="498" y="17" width="45" height="27"/>
+                                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xBD-oH-8ga">
+                                                <rect key="frame" x="517" y="18" width="24" height="24"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="24" id="Bjg-8p-Hfu"/>
+                                                    <constraint firstAttribute="height" constant="24" id="wFH-7u-lof"/>
+                                                </constraints>
                                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                                <state key="normal" title="vonume">
+                                                <state key="normal" image="volumeBtn">
                                                     <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 </state>
                                                 <connections>
                                                     <action selector="toggleVolumeSlide:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Dgb-P1-6rx"/>
                                                 </connections>
                                             </button>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mhB-xV-SU7">
-                                                <rect key="frame" x="48" y="19" width="67" height="21"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:00" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mhB-xV-SU7">
+                                                <rect key="frame" x="48" y="19" width="49" height="21"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="21" id="bLP-vC-Juj"/>
-                                                    <constraint firstAttribute="width" constant="67" id="qqC-qj-BRX"/>
+                                                    <constraint firstAttribute="width" constant="49" id="qqC-qj-BRX"/>
                                                 </constraints>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="hxk-l7-TEJ">
-                                                <rect key="frame" x="128" y="15" width="317" height="31"/>
+                                                <rect key="frame" x="103" y="15" width="365" height="31"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="300" id="mRc-V1-itG"/>
+                                                </constraints>
                                                 <connections>
                                                     <action selector="timeSliderDidChange:" destination="BYZ-38-t0r" eventType="valueChanged" id="jse-pl-Jbs"/>
                                                 </connections>
                                             </slider>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JxR-Iu-UUp">
-                                                <rect key="frame" x="451" y="22" width="39" height="17"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="00:00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JxR-Iu-UUp">
+                                                <rect key="frame" x="468" y="22" width="39" height="17"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="buB-nj-5nz">
-                                                <rect key="frame" x="551" y="15" width="30" height="30"/>
+                                                <rect key="frame" x="554" y="18" width="24" height="24"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="height" constant="30" id="EmV-Ux-zje"/>
-                                                    <constraint firstAttribute="width" constant="30" id="S1B-cq-wat"/>
+                                                    <constraint firstAttribute="height" constant="24" id="EmV-Ux-zje"/>
+                                                    <constraint firstAttribute="width" constant="24" id="S1B-cq-wat"/>
                                                 </constraints>
                                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                                <state key="normal" title="bright">
+                                                <state key="normal" image="brightnessBtn">
                                                     <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 </state>
                                                 <connections>
@@ -86,12 +93,12 @@
                                         </subviews>
                                         <color key="backgroundColor" red="0.43529411759999997" green="0.4431372549" blue="0.47450980390000003" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
-                                            <constraint firstItem="hxk-l7-TEJ" firstAttribute="leading" secondItem="mhB-xV-SU7" secondAttribute="trailing" constant="15" id="4J3-vl-OHJ"/>
+                                            <constraint firstItem="hxk-l7-TEJ" firstAttribute="leading" secondItem="mhB-xV-SU7" secondAttribute="trailing" constant="8" id="4J3-vl-OHJ"/>
                                             <constraint firstItem="JxR-Iu-UUp" firstAttribute="centerY" secondItem="dFG-dF-U89" secondAttribute="centerY" id="8sJ-ab-Tc7"/>
                                             <constraint firstAttribute="height" constant="60" id="CX3-fT-DoT"/>
                                             <constraint firstItem="buB-nj-5nz" firstAttribute="centerY" secondItem="dFG-dF-U89" secondAttribute="centerY" id="EcX-ZS-kNj"/>
-                                            <constraint firstAttribute="trailing" secondItem="buB-nj-5nz" secondAttribute="trailing" constant="19" id="FwG-dq-Wgh"/>
-                                            <constraint firstItem="JxR-Iu-UUp" firstAttribute="leading" secondItem="hxk-l7-TEJ" secondAttribute="trailing" constant="8" id="N2R-Kr-Kwo"/>
+                                            <constraint firstAttribute="trailing" secondItem="buB-nj-5nz" secondAttribute="trailing" constant="22" id="FwG-dq-Wgh"/>
+                                            <constraint firstItem="JxR-Iu-UUp" firstAttribute="leading" secondItem="hxk-l7-TEJ" secondAttribute="trailing" constant="9" id="N2R-Kr-Kwo"/>
                                             <constraint firstItem="A7G-xF-DNS" firstAttribute="centerY" secondItem="dFG-dF-U89" secondAttribute="centerY" id="Rcq-hP-uZI"/>
                                             <constraint firstItem="xBD-oH-8ga" firstAttribute="leading" secondItem="JxR-Iu-UUp" secondAttribute="trailing" constant="8" id="SY8-ed-deD"/>
                                             <constraint firstItem="xBD-oH-8ga" firstAttribute="centerY" secondItem="dFG-dF-U89" secondAttribute="centerY" id="UJp-6N-7fN"/>
@@ -103,12 +110,12 @@
                                         </constraints>
                                     </view>
                                     <button opaque="NO" alpha="0.5" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mDd-r3-zvi">
-                                        <rect key="frame" x="20" y="20" width="44" height="44"/>
+                                        <rect key="frame" x="20" y="20" width="30" height="30"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="44" id="0El-Ce-00H"/>
-                                            <constraint firstAttribute="width" constant="44" id="KVR-Az-iF4"/>
+                                            <constraint firstAttribute="height" constant="30" id="0El-Ce-00H"/>
+                                            <constraint firstAttribute="width" constant="30" id="KVR-Az-iF4"/>
                                         </constraints>
-                                        <state key="normal" title="back">
+                                        <state key="normal" image="backBtn">
                                             <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
@@ -185,5 +192,8 @@
     </scenes>
     <resources>
         <image name="PlayButton" width="21" height="22"/>
+        <image name="backBtn" width="30" height="30"/>
+        <image name="brightnessBtn" width="24" height="24"/>
+        <image name="volumeBtn" width="24" height="24"/>
     </resources>
 </document>
