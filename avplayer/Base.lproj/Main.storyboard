@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="14F1509" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="14F1713" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
@@ -43,6 +43,9 @@
                                                 <state key="normal" title="vonume">
                                                     <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 </state>
+                                                <connections>
+                                                    <action selector="toggleVolumeSlide:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Dgb-P1-6rx"/>
+                                                </connections>
                                             </button>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mhB-xV-SU7">
                                                 <rect key="frame" x="48" y="19" width="67" height="21"/>
@@ -51,7 +54,7 @@
                                                     <constraint firstAttribute="width" constant="67" id="qqC-qj-BRX"/>
                                                 </constraints>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="hxk-l7-TEJ">
@@ -63,7 +66,7 @@
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JxR-Iu-UUp">
                                                 <rect key="frame" x="451" y="22" width="39" height="17"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="buB-nj-5nz">
@@ -76,9 +79,12 @@
                                                 <state key="normal" title="bright">
                                                     <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 </state>
+                                                <connections>
+                                                    <action selector="toggleBrightnessSlide:" destination="BYZ-38-t0r" eventType="touchUpInside" id="eQK-HB-sn5"/>
+                                                </connections>
                                             </button>
                                         </subviews>
-                                        <color key="backgroundColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
+                                        <color key="backgroundColor" red="0.43529411759999997" green="0.4431372549" blue="0.47450980390000003" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
                                             <constraint firstItem="hxk-l7-TEJ" firstAttribute="leading" secondItem="mhB-xV-SU7" secondAttribute="trailing" constant="15" id="4J3-vl-OHJ"/>
                                             <constraint firstItem="JxR-Iu-UUp" firstAttribute="centerY" secondItem="dFG-dF-U89" secondAttribute="centerY" id="8sJ-ab-Tc7"/>
@@ -109,6 +115,36 @@
                                             <action selector="stopView:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ohg-qE-TzL"/>
                                         </connections>
                                     </button>
+                                    <view hidden="YES" alpha="0.5" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2zi-oF-y7l">
+                                        <rect key="frame" x="333" y="466" width="150" height="40"/>
+                                        <subviews>
+                                            <slider opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="sGm-6J-VdY">
+                                                <rect key="frame" x="0.0" y="5" width="150" height="31"/>
+                                            </slider>
+                                        </subviews>
+                                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstItem="sGm-6J-VdY" firstAttribute="top" secondItem="2zi-oF-y7l" secondAttribute="top" constant="5" id="aQ5-np-tla"/>
+                                            <constraint firstItem="sGm-6J-VdY" firstAttribute="leading" secondItem="2zi-oF-y7l" secondAttribute="leading" constant="2" id="fMA-Tj-Hvr"/>
+                                            <constraint firstAttribute="trailing" secondItem="sGm-6J-VdY" secondAttribute="trailing" constant="2" id="gY5-7l-AOc"/>
+                                            <constraint firstAttribute="bottom" secondItem="sGm-6J-VdY" secondAttribute="bottom" constant="5" id="jKT-fV-zfk"/>
+                                        </constraints>
+                                    </view>
+                                    <view hidden="YES" alpha="0.5" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="EDQ-R4-Fnw">
+                                        <rect key="frame" x="397" y="382" width="150" height="40"/>
+                                        <subviews>
+                                            <slider opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="2Le-o6-7Yf">
+                                                <rect key="frame" x="0.0" y="5" width="150" height="31"/>
+                                            </slider>
+                                        </subviews>
+                                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstAttribute="trailing" secondItem="2Le-o6-7Yf" secondAttribute="trailing" constant="2" id="3rv-pQ-aEs"/>
+                                            <constraint firstItem="2Le-o6-7Yf" firstAttribute="leading" secondItem="EDQ-R4-Fnw" secondAttribute="leading" constant="2" id="78j-D6-TmB"/>
+                                            <constraint firstItem="2Le-o6-7Yf" firstAttribute="top" secondItem="EDQ-R4-Fnw" secondAttribute="top" constant="5" id="MI8-EB-WXu"/>
+                                            <constraint firstAttribute="bottom" secondItem="2Le-o6-7Yf" secondAttribute="bottom" constant="5" id="MjP-2s-Mjb"/>
+                                        </constraints>
+                                    </view>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
@@ -129,13 +165,17 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="brightnessView" destination="EDQ-R4-Fnw" id="oSi-zd-2dJ"/>
                         <outlet property="controlbarView" destination="dFG-dF-U89" id="V3k-SX-5Vp"/>
                         <outlet property="durationLabel" destination="JxR-Iu-UUp" id="zml-79-4rT"/>
                         <outlet property="playPauseButton" destination="A7G-xF-DNS" id="6bh-w8-5qa"/>
                         <outlet property="playerView" destination="GCH-Bp-hCm" id="dAn-Pl-OxK"/>
                         <outlet property="startTimeLabel" destination="mhB-xV-SU7" id="Msh-h1-N7o"/>
                         <outlet property="stopButton" destination="mDd-r3-zvi" id="H36-7q-OUp"/>
+                        <outlet property="taggleVolumeBtn" destination="xBD-oH-8ga" id="SXy-dc-Cz1"/>
                         <outlet property="timeSlider" destination="hxk-l7-TEJ" id="cHS-8U-usQ"/>
+                        <outlet property="toggleBrightnessBtn" destination="buB-nj-5nz" id="XFl-Os-p2e"/>
+                        <outlet property="volumeBoxView" destination="2zi-oF-y7l" id="X0G-Sp-ZRP"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

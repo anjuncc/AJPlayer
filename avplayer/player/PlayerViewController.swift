@@ -17,8 +17,10 @@ import MediaPlayer
 private var playerViewControllerKVOContext = 0
 
 class PlayerViewController: UIViewController {
+    var didSetConstraints = false
+    var startLocation:CGPoint = CGPointZero
     var volumeView: MPVolumeView = MPVolumeView()
-    
+    let vslider = UISlider()
     // MARK: Properties
     
     // Attempt load and test these asset keys before playing.
@@ -87,6 +89,20 @@ class PlayerViewController: UIViewController {
 
     // MARK: - IBOutlets
     
+ 
+    @IBOutlet weak var taggleVolumeBtn: UIButton!
+    
+    @IBOutlet weak var toggleBrightnessBtn: UIButton!
+    @IBOutlet weak var volumeBoxView: UIView! {
+        didSet {
+           volumeBoxView.transform =  CGAffineTransformMakeRotation( CGFloat(-M_PI_2) );
+        }
+    }
+    @IBOutlet weak var brightnessView: UIView!{
+        didSet {
+            brightnessView.transform =  CGAffineTransformMakeRotation( CGFloat(-M_PI_2) );
+        }
+    }
     @IBOutlet weak var timeSlider: UISlider!
     @IBOutlet weak var startTimeLabel: UILabel!
     @IBOutlet weak var durationLabel: UILabel!
@@ -100,7 +116,7 @@ class PlayerViewController: UIViewController {
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        
+        volumeView.hidden = true;
         /*
             Update the UI when these player properties change.
         
@@ -114,9 +130,10 @@ class PlayerViewController: UIViewController {
         
         playerView.playerLayer.player = player
         
-//        let movieURL = NSBundle.mainBundle().URLForResource("ElephantSeals", withExtension: "mov")!
-        let movieURL = NSURL(string: "http://192.168.130.109:90/jp3.mp4");
-        asset = AVURLAsset(URL: movieURL!, options: nil)
+        let movieURL = NSBundle.mainBundle().URLForResource("jp3", withExtension: "mp4")!
+//        let movieURL = NSURL(string: "http://192.168.130.109:90/jp3.mp4");
+        asset = AVURLAsset(URL: movieURL, options: nil)
+      
         
         // Make sure we don't have a strong reference cycle by only capturing self as weak.
         let interval = CMTimeMake(1, 1)
@@ -131,25 +148,52 @@ class PlayerViewController: UIViewController {
             
         }
         //add swipe
-        let leftSwipe = UISwipeGestureRecognizer(target: self, action: Selector("handleSwipes:"))
-        let rightSwipe = UISwipeGestureRecognizer(target: self, action: Selector("handleSwipes:"))
+        let panRecognizer = UIPanGestureRecognizer(target: self, action: Selector("panedView:"))
+        playerView.addGestureRecognizer(panRecognizer)
         
-        leftSwipe.direction = .Left
-        rightSwipe.direction = .Right
-        
-        playerView.addGestureRecognizer(leftSwipe)
-        playerView.addGestureRecognizer(rightSwipe)
-        
-        let upSwipe = UISwipeGestureRecognizer(target: self, action: Selector("handleSwipes:"))
-        let downSwipe = UISwipeGestureRecognizer(target: self, action: Selector("handleSwipes:"))
-        upSwipe.direction = .Up
-        downSwipe.direction = .Down
-        
-        playerView.addGestureRecognizer(upSwipe)
-        playerView.addGestureRecognizer(downSwipe)
+//        let leftSwipe = UISwipeGestureRecognizer(target: self, action: Selector("handleSwipes:"))
+//        let rightSwipe = UISwipeGestureRecognizer(target: self, action: Selector("handleSwipes:"))
+//        
+//        leftSwipe.direction = .Left
+//        rightSwipe.direction = .Right
+//        
+//        playerView.addGestureRecognizer(leftSwipe)
+//        playerView.addGestureRecognizer(rightSwipe)
+//        
+//        let upSwipe = UISwipeGestureRecognizer(target: self, action: Selector("handleSwipes:"))
+//        let downSwipe = UISwipeGestureRecognizer(target: self, action: Selector("handleSwipes:"))
+//        upSwipe.direction = .Up
+//        downSwipe.direction = .Down
+//        
+//        playerView.addGestureRecognizer(upSwipe)
+//        playerView.addGestureRecognizer(downSwipe)
         
         
         self.view .addSubview(volumeView)
+        
+//        //slide
+//        
+//        vslider.translatesAutoresizingMaskIntoConstraints = false
+//        vslider.removeConstraints(vslider.constraints)
+//        
+//        vslider.backgroundColor  = UIColor.redColor()
+//        vslider.transform =   CGAffineTransformMakeRotation( CGFloat(-M_PI_2) );
+//        
+//        volumeBoxView.addSubview(vslider);
+  
+    }
+    override func updateViewConstraints() {
+        if(!didSetConstraints){
+            let h = volumeBoxView.frame.width/2 - volumeBoxView.frame.height/2
+            self.view.addConstraint(NSLayoutConstraint(item: volumeBoxView, attribute: .Bottom, relatedBy: .Equal, toItem: controlbarView, attribute: .Top, multiplier: 1, constant: h))
+            self.view.addConstraint(NSLayoutConstraint(item: volumeBoxView, attribute: .CenterX, relatedBy: .Equal, toItem: taggleVolumeBtn, attribute: .CenterX, multiplier: 1, constant: 0))
+            
+            self.view.addConstraint(NSLayoutConstraint(item: brightnessView, attribute: .Bottom, relatedBy: .Equal, toItem: controlbarView, attribute: .Top, multiplier: 1, constant: h))
+            self.view.addConstraint(NSLayoutConstraint(item: brightnessView, attribute: .CenterX, relatedBy: .Equal, toItem: toggleBrightnessBtn, attribute: .CenterX, multiplier: 1, constant: 0))
+        }
+
+        
+        super.updateViewConstraints();
     }
     
     override func viewDidDisappear(animated: Bool) {
@@ -227,7 +271,15 @@ class PlayerViewController: UIViewController {
 
     // MARK: - IBActions
 
+    @IBAction func toggleVolumeSlide(sender: AnyObject) {
+        volumeBoxView.hidden = !volumeBoxView.hidden
+    }
+    
+    @IBAction func toggleBrightnessSlide(sender: UIButton) {
+        brightnessView.hidden = !brightnessView.hidden
+    }
 	@IBAction func playPauseButtonWasPressed(sender: UIButton) {
+        print(11)
 		if player.rate != 1.0 {
             // Not playing forward, so play.
  			if currentTime == duration {
@@ -243,14 +295,24 @@ class PlayerViewController: UIViewController {
 		}
 	}
 	
-	@IBAction func rewindButtonWasPressed(sender: UIButton) {
+    func rewindButtonWasPressed(plus:Float) {
         // Rewind no faster than -2.0.
-        rate = max(player.rate - 2.0, -2.0)
+//        rate = max(player.rate - 2.0, -2.0)
+        timeSlider.value =  max(Float(timeSlider.value)-10,0)
+       
+        let (h,m,s) =  HudTools.shared.secondsToHoursMinutesSeconds(Int(currentTime))
+        let (h2,m2,s2) =  HudTools.shared.secondsToHoursMinutesSeconds(Int(self.duration))
+        HudTools.shared.showBackward(self.view,msg:String(format: "[%d:%d:%d/%d:%d:%d]", arguments: [h,m,s,h2,m2,s2]));
 	}
 	
-	@IBAction func fastForwardButtonWasPressed(sender: UIButton) {
+	 func fastForwardButtonWasPressed() {
         // Fast forward no faster than 2.0.
-        rate = min(player.rate + 2.0, 2.0)
+//        rate = min(player.rate + 2.0, 2.0)
+        timeSlider.value =  min(Float(timeSlider.value)+10,Float(duration))
+      
+        let (h,m,s) =  HudTools.shared.secondsToHoursMinutesSeconds(Int(currentTime))
+        let (h2,m2,s2) =  HudTools.shared.secondsToHoursMinutesSeconds(Int(self.duration))
+        HudTools.shared.showForward(self.view,msg:String(format: "[%d:%d:%d/%d:%d:%d]", arguments: [h,m,s,h2,m2,s2]));
 	}
 
     @IBAction func timeSliderDidChange(sender: UISlider) {
@@ -372,9 +434,10 @@ class PlayerViewController: UIViewController {
     @IBOutlet weak var stopButton: UIButton!
     @IBAction func stopView(sender: UIButton) {
         player.replaceCurrentItemWithPlayerItem(nil)
+       
     }
     //调节音量
-    func voiceAdd(plus:Bool){
+    func voiceAdd(plus:Float){
         
         var volumeViewSlider: UISlider? = nil
         for view: UIView in volumeView.subviews {
@@ -386,11 +449,14 @@ class PlayerViewController: UIViewController {
         if let slider = volumeViewSlider{
             print(slider.value)
             // change system volume, the value is between 0.0f and 1.0f
-            if (plus){
+            if (plus<0){
                  slider.setValue(slider.value+0.02, animated: true)
+                 HudTools.shared.showVoice(self.view, msg: "音量:+0.02")
                  print("+0.02之后:\(slider.value)");
+                
             } else{
                  slider.setValue(slider.value-0.02, animated: true)
+                HudTools.shared.showVoice(self.view, msg: "音量:-0.02")
                  print("-0.02之后:\(slider.value)");
             }
            
@@ -399,38 +465,53 @@ class PlayerViewController: UIViewController {
             slider.sendActionsForControlEvents(.TouchUpInside)
         }
     }
-    func brightnessAdd(plus:Bool){
-        if(plus){
+    func brightnessAdd(plus:Float){
+        if(plus<0){
             UIScreen.mainScreen().brightness+=0.02;
+           HudTools.shared.showBrightless(self.view, msg: "亮度:+0.02")
         }else{
             UIScreen.mainScreen().brightness-=0.02;
+            HudTools.shared.showBrightless(self.view, msg: "亮度:-0.02")
         }
         print(UIScreen.mainScreen().brightness)
     }
-    func handleSwipes(sender:UISwipeGestureRecognizer) {
-    /*
-        if (sender.direction == .Left) {
-         voiceAdd(false)
-           
-//            var labelPosition = CGPointMake(self.swipeLabel.frame.origin.x - 50.0, self.swipeLabel.frame.origin.y);
-//            swipeLabel.frame = CGRectMake( labelPosition.x , labelPosition.y , self.swipeLabel.frame.size.width, self.swipeLabel.frame.size.height)
+    func panedView(sender:UIPanGestureRecognizer){
+       
+        if (sender.state == UIGestureRecognizerState.Began) {
+            startLocation = sender.locationInView(self.view);
         }
-        
-        if (sender.direction == .Right) {
-            voiceAdd(true)
-            print("Swipe Right")
-//            var labelPosition = CGPointMake(self.swipeLabel.frame.origin.x + 50.0, self.swipeLabel.frame.origin.y);
-//            swipeLabel.frame = CGRectMake( labelPosition.x , labelPosition.y , self.swipeLabel.frame.size.width, self.swipeLabel.frame.size.height)
-        }
-*/
-        switch sender.direction {
-        case UISwipeGestureRecognizerDirection.Left : voiceAdd(true) ;break
-        case UISwipeGestureRecognizerDirection.Right : voiceAdd(false);break
-        case UISwipeGestureRecognizerDirection.Up : brightnessAdd(true);break
-        case UISwipeGestureRecognizerDirection.Down : brightnessAdd(false);break
-        default:
-            break
+        else if (sender.state == UIGestureRecognizerState.Changed) {
+            let stopLocation = sender.locationInView(self.view);
+            let dx = stopLocation.x - startLocation.x;
+            let dy = stopLocation.y - startLocation.y;
+            if abs(dx)>abs(dy)   {
+                rewindButtonWasPressed(Float(dx))
+                NSLog(" 水平 %f" ,dx )
+            }else{
+                if(stopLocation.x>playerView.bounds.width/2){
+                   NSLog("adjust vonume")
+                    voiceAdd(Float(dy))
+                }else{
+                 NSLog("adjust birghtless")
+                    brightnessAdd(Float(dy))
+                }
+                NSLog("垂直 %f",dy)
+            }
+            
+        }else if (sender.state == UIGestureRecognizerState.Ended) {
+            SVProgressHUD.dismiss()
         }
     }
     
+//    func handleSwipes(sender:UISwipeGestureRecognizer) {
+//  
+//        switch sender.direction {
+//        case UISwipeGestureRecognizerDirection.Left : rewindButtonWasPressed() ;break
+//        case UISwipeGestureRecognizerDirection.Right : fastForwardButtonWasPressed();break
+//        case UISwipeGestureRecognizerDirection.Up : brightnessAdd(true);break
+//        case UISwipeGestureRecognizerDirection.Down : brightnessAdd(false);break
+//        default:
+//            break
+//        }
+//    }
 }

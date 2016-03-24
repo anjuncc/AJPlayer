@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5F8B901B1CA38F6F00EC6B62 /* MySlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F8B901A1CA38F6F00EC6B62 /* MySlider.swift */; };
 		5FB7CFFF1CA13DDF00DC2C31 /* PlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FB7CFFE1CA13DDF00DC2C31 /* PlayerView.swift */; };
 		5FB7D0011CA13E0A00DC2C31 /* PlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FB7D0001CA13E0A00DC2C31 /* PlayerViewController.swift */; };
 		5FDF6F701CA261BF00378BCF /* HudTools.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FDF6F6F1CA261BF00378BCF /* HudTools.swift */; };
@@ -20,6 +21,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5F8B901A1CA38F6F00EC6B62 /* MySlider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MySlider.swift; sourceTree = "<group>"; };
 		5FB7CFFE1CA13DDF00DC2C31 /* PlayerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerView.swift; sourceTree = "<group>"; };
 		5FB7D0001CA13E0A00DC2C31 /* PlayerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerViewController.swift; sourceTree = "<group>"; };
 		5FDF6F6E1CA2511900378BCF /* avplayer-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "avplayer-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -56,6 +58,14 @@
 				9381F078E75A33D933198D69 /* Pods-avplayer.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		5F8B90191CA38EF500EC6B62 /* part */ = {
+			isa = PBXGroup;
+			children = (
+				5F8B901A1CA38F6F00EC6B62 /* MySlider.swift */,
+			);
+			path = part;
 			sourceTree = "<group>";
 		};
 		5FDF6F711CA283A500378BCF /* resources */ = {
@@ -103,6 +113,7 @@
 		5FF0CA1C1C9C03A000827C02 /* player */ = {
 			isa = PBXGroup;
 			children = (
+				5F8B90191CA38EF500EC6B62 /* part */,
 				5FB7CFFE1CA13DDF00DC2C31 /* PlayerView.swift */,
 				5FB7D0001CA13E0A00DC2C31 /* PlayerViewController.swift */,
 				5FDF6F6F1CA261BF00378BCF /* HudTools.swift */,
@@ -241,6 +252,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5F8B901B1CA38F6F00EC6B62 /* MySlider.swift in Sources */,
 				5FF0CA0D1C9C029A00827C02 /* ViewController.swift in Sources */,
 				5FF0CA0B1C9C029A00827C02 /* AppDelegate.swift in Sources */,
 				5FB7CFFF1CA13DDF00DC2C31 /* PlayerView.swift in Sources */,
