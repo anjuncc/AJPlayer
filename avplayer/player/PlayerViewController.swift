@@ -17,6 +17,7 @@ import MediaPlayer
 private var playerViewControllerKVOContext = 0
 
 class PlayerViewController: UIViewController {
+    var showControl = false
     var didSetConstraints = false
     var startLocation:CGPoint = CGPointZero
     var volumeView: MPVolumeView = MPVolumeView()
@@ -193,6 +194,8 @@ class PlayerViewController: UIViewController {
         let panRecognizer = UIPanGestureRecognizer(target: self, action: Selector("panedView:"))
         playerView.addGestureRecognizer(panRecognizer)
         
+        let tapRecognizer = UITapGestureRecognizer(target: self, action: Selector("tapedView:"))
+        playerView.addGestureRecognizer(tapRecognizer)
         
     }
     override func updateViewConstraints() {
@@ -311,11 +314,13 @@ class PlayerViewController: UIViewController {
     func rewindButtonWasPressed(plus:Float) {
         // Rewind no faster than -2.0.
 //        rate = max(player.rate - 2.0, -2.0)
-        timeSlider.value =  max(Float(timeSlider.value)-10,0)
-       
-        let (_,m,s) =  HudTools.shared.secondsToHoursMinutesSeconds(Int(currentTime))
-        let (_,m2,s2) =  HudTools.shared.secondsToHoursMinutesSeconds(Int(self.duration))
-        HudTools.shared.showBackward(self.view,msg:String(format: "[%d:%d/%d:%d]", arguments: [m,s,m2,s2]));
+        
+//       let dxtime = Int(plus)/Int(self.view.frame.width) * Int(self.duration)
+//        timeSlider.value =  max(Float(ctime),0)
+//       
+//        let (_,m,s) =  HudTools.shared.secondsToHoursMinutesSeconds(Int(currentTime))
+//        let (_,m2,s2) =  HudTools.shared.secondsToHoursMinutesSeconds(Int(self.duration))
+//        HudTools.shared.showBackward(self.view,msg:String(format: "[%d:%d/%d:%d]", arguments: [m,s,m2,s2]));
 	}
 	
 	 func fastForwardButtonWasPressed() {
@@ -456,6 +461,29 @@ class PlayerViewController: UIViewController {
         player.replaceCurrentItemWithPlayerItem(nil)
        
     }
+    func currentTimeAdd(plus:Float,_ end:Bool){
+        let dxtime = Double(plus/50);// Double(plus)/Double(self.view.frame.width) * Double(self.duration)
+        var ctime =  currentTime +  dxtime
+//        print("plus:\(plus),dxtime:\(dxtime),currentTime:\(currentTime),duration:\(Double(self.duration))")
+        
+        ctime = ctime > duration ? duration : ctime
+        ctime = ctime < 0 ? 0 :ctime
+        
+//        currentTime = ctime
+        
+        let (_,m,s) =  HudTools.shared.secondsToHoursMinutesSeconds(Int(ctime))
+        let (_,m2,s2) =  HudTools.shared.secondsToHoursMinutesSeconds(Int(self.duration))
+        if(plus>0){
+            HudTools.shared.showForward(self.view,msg:String(format: "[%d:%d/%d:%d]", arguments: [m,s,m2,s2]));
+        }else{
+            HudTools.shared.showBackward(self.view,msg:String(format: "[%d:%d/%d:%d]", arguments: [m,s,m2,s2]));
+        }
+        if(end){
+            timeSlider.value = Float(ctime)
+            timeSlider.sendActionsForControlEvents(.ValueChanged)
+        }
+        
+    }
     //调节音量
     func voiceAdd(plus:Float){
         
@@ -490,17 +518,27 @@ class PlayerViewController: UIViewController {
         }
         
     }
+     func tapedView(sender:UIPanGestureRecognizer){
+        if(controlbarView.hidden){
+            controlbarView.hidden =  false
+            stopButton.hidden = false
+        }else{
+            controlbarView.hidden =  true
+            stopButton.hidden = true
+            brightnessView.hidden = true
+            volumeBoxView.hidden = true
+        }
+    }
     func panedView(sender:UIPanGestureRecognizer){
-       
+        let stopLocation = sender.locationInView(self.view);
+        let dx = stopLocation.x - startLocation.x;
+        let dy = stopLocation.y - startLocation.y;
         if (sender.state == UIGestureRecognizerState.Began) {
             startLocation = sender.locationInView(self.view);
         }
         else if (sender.state == UIGestureRecognizerState.Changed) {
-            let stopLocation = sender.locationInView(self.view);
-            let dx = stopLocation.x - startLocation.x;
-            let dy = stopLocation.y - startLocation.y;
             if abs(dx)>abs(dy)   {
-                rewindButtonWasPressed(Float(dx))
+                currentTimeAdd(Float(dx),false)
             }else{
                 if(stopLocation.x>playerView.bounds.width/2){
                     voiceAdd(Float(dy))
@@ -509,6 +547,9 @@ class PlayerViewController: UIViewController {
                 }
             }
         }else if (sender.state == UIGestureRecognizerState.Ended) {
+            if abs(dx)>abs(dy)   {
+                currentTimeAdd(Float(dx),true)
+            }
             SVProgressHUD.dismiss()
         }
     }
