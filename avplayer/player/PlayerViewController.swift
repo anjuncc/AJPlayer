@@ -20,7 +20,18 @@ class PlayerViewController: UIViewController {
     var didSetConstraints = false
     var startLocation:CGPoint = CGPointZero
     var volumeView: MPVolumeView = MPVolumeView()
-    let vslider = UISlider()
+    var volumeViewSlider: UISlider?{
+        get{
+            for view: UIView in volumeView.subviews {
+                if (view.self.description.containsString("MPVolumeSlider")) {
+                    return (view as! UISlider)
+                }
+            }
+            return nil
+        }
+    }
+   
+    
     // MARK: Properties
     
     // Attempt load and test these asset keys before playing.
@@ -39,9 +50,37 @@ class PlayerViewController: UIViewController {
             let newTime = CMTimeMakeWithSeconds(newValue, 1)
 			player.seekToTime(newTime, toleranceBefore: kCMTimeZero, toleranceAfter: kCMTimeZero)
             
-            print("currentTime:\(newValue)")
+//            print("currentTime:\(newValue)")
         }
 	}
+    var currentVolume:Float{
+        get{
+            if let slider = volumeViewSlider{
+                volumeSlider.value = slider.value
+                
+                return slider.value
+            }
+            return 0
+        }
+        set{
+            if let slider = volumeViewSlider{
+                volumeSlider.value = newValue
+                slider.value = newValue
+//                slider.sendActionsForControlEvents(.ValueChanged)
+//                volumeSlider.sendActionsForControlEvents(.ValueChanged)
+            }
+        }
+    }
+    var currentBrightness:CGFloat{
+        get{
+            brightnessSlider.value = Float(UIScreen.mainScreen().brightness)
+            return UIScreen.mainScreen().brightness
+        }
+        set{
+            UIScreen.mainScreen().brightness = newValue
+            brightnessSlider.value = Float(newValue)
+        }
+    }
 
 	var duration: Double {
         guard let currentItem = player.currentItem else { return 0.0 }
@@ -55,7 +94,7 @@ class PlayerViewController: UIViewController {
 
         set {
             player.rate = newValue
-            print("rate:\(newValue)")
+//            print("rate:\(newValue)")
         }
 	}
 
@@ -89,6 +128,8 @@ class PlayerViewController: UIViewController {
 
     // MARK: - IBOutlets
     
+    @IBOutlet weak var volumeSlider: UISlider!
+    @IBOutlet weak var brightnessSlider: UISlider!
  
     @IBOutlet weak var taggleVolumeBtn: UIButton!
     
@@ -251,7 +292,7 @@ class PlayerViewController: UIViewController {
         brightnessView.hidden = !brightnessView.hidden
     }
 	@IBAction func playPauseButtonWasPressed(sender: UIButton) {
-        print(11)
+        
 		if player.rate != 1.0 {
             // Not playing forward, so play.
  			if currentTime == duration {
@@ -290,7 +331,14 @@ class PlayerViewController: UIViewController {
     @IBAction func timeSliderDidChange(sender: UISlider) {
         currentTime = Double(sender.value)
     }
+    @IBAction func volumeSliderDidChange(sender: UISlider) {
+        currentVolume = sender.value
+    }
     
+    @IBAction func brightnessSliderDidChange(sender: UISlider) {
+        currentBrightness = CGFloat(sender.value)
+    }
+   
     // MARK: - KVO Observation
 
     // Update our UI when player or `player.currentItem` changes.
@@ -411,25 +459,25 @@ class PlayerViewController: UIViewController {
     //调节音量
     func voiceAdd(plus:Float){
         
-        var volumeViewSlider: UISlider? = nil
-        for view: UIView in volumeView.subviews {
-            if (view.self.description.containsString("MPVolumeSlider")) {
-                volumeViewSlider = (view as! UISlider)
-            }
-        }
+//        var volumeViewSlider: UISlider? = nil
+//        for view: UIView in volumeView.subviews {
+//            if (view.self.description.containsString("MPVolumeSlider")) {
+//                volumeViewSlider = (view as! UISlider)
+//            }
+//        }
         // retrieve system volume
         if let slider = volumeViewSlider{
-            print(slider.value)
+//            print(slider.value)
             // change system volume, the value is between 0.0f and 1.0f
             if (plus<0){
-                 slider.setValue(slider.value+0.01, animated: true)
+                currentVolume = slider.value+0.01
                  HudTools.shared.showVoice(self.view, msg: "音量:+0.01")
             } else{
-                 slider.setValue(slider.value-0.01, animated: true)
+                currentVolume = slider.value-0.01
                 HudTools.shared.showVoice(self.view, msg: "音量:-0.01")
             }
             // send UI control event to make the change effect right now.
-            slider.sendActionsForControlEvents(.TouchUpInside)
+            
         }
     }
     func brightnessAdd(plus:Float){

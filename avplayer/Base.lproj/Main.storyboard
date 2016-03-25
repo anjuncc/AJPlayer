@@ -52,15 +52,15 @@
                                                 </connections>
                                             </button>
                                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="hxk-l7-TEJ">
-                                                <rect key="frame" x="92" y="15" width="370" height="31"/>
+                                                <rect key="frame" x="87" y="15" width="380" height="31"/>
                                                 <connections>
                                                     <action selector="timeSliderDidChange:" destination="BYZ-38-t0r" eventType="valueChanged" id="jse-pl-Jbs"/>
                                                 </connections>
                                             </slider>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="00:00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JxR-Iu-UUp">
-                                                <rect key="frame" x="470" y="18" width="40" height="24"/>
+                                                <rect key="frame" x="475" y="18" width="35" height="24"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="width" constant="40" id="cBI-he-j1O"/>
+                                                    <constraint firstAttribute="width" constant="35" id="cBI-he-j1O"/>
                                                     <constraint firstAttribute="height" constant="24" id="sx8-cV-qh4"/>
                                                 </constraints>
                                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
@@ -82,10 +82,10 @@
                                                 </connections>
                                             </button>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="00:00" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mhB-xV-SU7">
-                                                <rect key="frame" x="44" y="18" width="40" height="24"/>
+                                                <rect key="frame" x="44" y="18" width="35" height="24"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="24" id="bLP-vC-Juj"/>
-                                                    <constraint firstAttribute="width" constant="40" id="qqC-qj-BRX"/>
+                                                    <constraint firstAttribute="width" constant="35" id="qqC-qj-BRX"/>
                                                 </constraints>
                                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -128,6 +128,9 @@
                                         <subviews>
                                             <slider opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="sGm-6J-VdY">
                                                 <rect key="frame" x="0.0" y="0.0" width="150" height="31"/>
+                                                <connections>
+                                                    <action selector="volumeSliderDidChange:" destination="BYZ-38-t0r" eventType="valueChanged" id="gYv-jf-DoC"/>
+                                                </connections>
                                             </slider>
                                         </subviews>
                                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
@@ -143,6 +146,9 @@
                                         <subviews>
                                             <slider opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="2Le-o6-7Yf">
                                                 <rect key="frame" x="0.0" y="0.0" width="150" height="31"/>
+                                                <connections>
+                                                    <action selector="brightnessSliderDidChange:" destination="BYZ-38-t0r" eventType="valueChanged" id="CZn-Y8-yJU"/>
+                                                </connections>
                                             </slider>
                                         </subviews>
                                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
@@ -173,6 +179,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="brightnessSlider" destination="2Le-o6-7Yf" id="13H-k0-f3h"/>
                         <outlet property="brightnessView" destination="EDQ-R4-Fnw" id="oSi-zd-2dJ"/>
                         <outlet property="controlbarView" destination="dFG-dF-U89" id="V3k-SX-5Vp"/>
                         <outlet property="durationLabel" destination="JxR-Iu-UUp" id="zml-79-4rT"/>
@@ -184,6 +191,7 @@
                         <outlet property="timeSlider" destination="hxk-l7-TEJ" id="cHS-8U-usQ"/>
                         <outlet property="toggleBrightnessBtn" destination="buB-nj-5nz" id="XFl-Os-p2e"/>
                         <outlet property="volumeBoxView" destination="2zi-oF-y7l" id="X0G-Sp-ZRP"/>
+                        <outlet property="volumeSlider" destination="sGm-6J-VdY" id="1S4-Ev-OCk"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
