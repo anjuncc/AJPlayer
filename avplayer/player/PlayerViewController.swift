@@ -116,7 +116,8 @@ class PlayerViewController: UIViewController {
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        volumeView.hidden = true;
+//        volumeView.hidden = true;
+//        self.view .addSubview(volumeView)
         /*
             Update the UI when these player properties change.
         
@@ -147,40 +148,11 @@ class PlayerViewController: UIViewController {
             }
             
         }
-        //add swipe
+        //add pan
         let panRecognizer = UIPanGestureRecognizer(target: self, action: Selector("panedView:"))
         playerView.addGestureRecognizer(panRecognizer)
         
-//        let leftSwipe = UISwipeGestureRecognizer(target: self, action: Selector("handleSwipes:"))
-//        let rightSwipe = UISwipeGestureRecognizer(target: self, action: Selector("handleSwipes:"))
-//        
-//        leftSwipe.direction = .Left
-//        rightSwipe.direction = .Right
-//        
-//        playerView.addGestureRecognizer(leftSwipe)
-//        playerView.addGestureRecognizer(rightSwipe)
-//        
-//        let upSwipe = UISwipeGestureRecognizer(target: self, action: Selector("handleSwipes:"))
-//        let downSwipe = UISwipeGestureRecognizer(target: self, action: Selector("handleSwipes:"))
-//        upSwipe.direction = .Up
-//        downSwipe.direction = .Down
-//        
-//        playerView.addGestureRecognizer(upSwipe)
-//        playerView.addGestureRecognizer(downSwipe)
         
-        
-        self.view .addSubview(volumeView)
-        
-//        //slide
-//        
-//        vslider.translatesAutoresizingMaskIntoConstraints = false
-//        vslider.removeConstraints(vslider.constraints)
-//        
-//        vslider.backgroundColor  = UIColor.redColor()
-//        vslider.transform =   CGAffineTransformMakeRotation( CGFloat(-M_PI_2) );
-//        
-//        volumeBoxView.addSubview(vslider);
-  
     }
     override func updateViewConstraints() {
         if(!didSetConstraints){
@@ -300,9 +272,9 @@ class PlayerViewController: UIViewController {
 //        rate = max(player.rate - 2.0, -2.0)
         timeSlider.value =  max(Float(timeSlider.value)-10,0)
        
-        let (h,m,s) =  HudTools.shared.secondsToHoursMinutesSeconds(Int(currentTime))
-        let (h2,m2,s2) =  HudTools.shared.secondsToHoursMinutesSeconds(Int(self.duration))
-        HudTools.shared.showBackward(self.view,msg:String(format: "[%d:%d:%d/%d:%d:%d]", arguments: [h,m,s,h2,m2,s2]));
+        let (_,m,s) =  HudTools.shared.secondsToHoursMinutesSeconds(Int(currentTime))
+        let (_,m2,s2) =  HudTools.shared.secondsToHoursMinutesSeconds(Int(self.duration))
+        HudTools.shared.showBackward(self.view,msg:String(format: "[%d:%d/%d:%d]", arguments: [m,s,m2,s2]));
 	}
 	
 	 func fastForwardButtonWasPressed() {
@@ -310,9 +282,9 @@ class PlayerViewController: UIViewController {
 //        rate = min(player.rate + 2.0, 2.0)
         timeSlider.value =  min(Float(timeSlider.value)+10,Float(duration))
       
-        let (h,m,s) =  HudTools.shared.secondsToHoursMinutesSeconds(Int(currentTime))
-        let (h2,m2,s2) =  HudTools.shared.secondsToHoursMinutesSeconds(Int(self.duration))
-        HudTools.shared.showForward(self.view,msg:String(format: "[%d:%d:%d/%d:%d:%d]", arguments: [h,m,s,h2,m2,s2]));
+        let (_,m,s) =  HudTools.shared.secondsToHoursMinutesSeconds(Int(currentTime))
+        let (_,m2,s2) =  HudTools.shared.secondsToHoursMinutesSeconds(Int(self.duration))
+        HudTools.shared.showForward(self.view,msg:String(format: "[%d:%d/%d:%d]", arguments: [m,s,m2,s2]));
 	}
 
     @IBAction func timeSliderDidChange(sender: UISlider) {
@@ -450,17 +422,12 @@ class PlayerViewController: UIViewController {
             print(slider.value)
             // change system volume, the value is between 0.0f and 1.0f
             if (plus<0){
-                 slider.setValue(slider.value+0.02, animated: true)
-                 HudTools.shared.showVoice(self.view, msg: "音量:+0.02")
-                 print("+0.02之后:\(slider.value)");
-                
+                 slider.setValue(slider.value+0.01, animated: true)
+                 HudTools.shared.showVoice(self.view, msg: "音量:+0.01")
             } else{
-                 slider.setValue(slider.value-0.02, animated: true)
-                HudTools.shared.showVoice(self.view, msg: "音量:-0.02")
-                 print("-0.02之后:\(slider.value)");
+                 slider.setValue(slider.value-0.01, animated: true)
+                HudTools.shared.showVoice(self.view, msg: "音量:-0.01")
             }
-           
-            
             // send UI control event to make the change effect right now.
             slider.sendActionsForControlEvents(.TouchUpInside)
         }
@@ -473,7 +440,7 @@ class PlayerViewController: UIViewController {
             UIScreen.mainScreen().brightness-=0.02;
             HudTools.shared.showBrightless(self.view, msg: "亮度:-0.02")
         }
-        print(UIScreen.mainScreen().brightness)
+        
     }
     func panedView(sender:UIPanGestureRecognizer){
        
@@ -486,32 +453,15 @@ class PlayerViewController: UIViewController {
             let dy = stopLocation.y - startLocation.y;
             if abs(dx)>abs(dy)   {
                 rewindButtonWasPressed(Float(dx))
-                NSLog(" 水平 %f" ,dx )
             }else{
                 if(stopLocation.x>playerView.bounds.width/2){
-                   NSLog("adjust vonume")
                     voiceAdd(Float(dy))
                 }else{
-                 NSLog("adjust birghtless")
                     brightnessAdd(Float(dy))
                 }
-                NSLog("垂直 %f",dy)
             }
-            
         }else if (sender.state == UIGestureRecognizerState.Ended) {
             SVProgressHUD.dismiss()
         }
     }
-    
-//    func handleSwipes(sender:UISwipeGestureRecognizer) {
-//  
-//        switch sender.direction {
-//        case UISwipeGestureRecognizerDirection.Left : rewindButtonWasPressed() ;break
-//        case UISwipeGestureRecognizerDirection.Right : fastForwardButtonWasPressed();break
-//        case UISwipeGestureRecognizerDirection.Up : brightnessAdd(true);break
-//        case UISwipeGestureRecognizerDirection.Down : brightnessAdd(false);break
-//        default:
-//            break
-//        }
-//    }
 }
